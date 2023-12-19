@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% block title %} Login {% endblock %}
+{% block content %}
+<div class="w-1/2 p-6 mu-6 mx-auto bg-gray-100 rounded-xl mt-10">
+    <div class="flex justify-center">
+        <h1 class="mb-6 text-3xl"> Login </h1>
+    </div>
+    <form method="post" action="." >
+        {% csrf_token %}
+            <div class="mb-3">
+                <label class="inline-block mb-2"> Username </label> <br>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label class="inline-block mb-2 mb-2"> Password </label><br>
+                {{ form.password }}
+            </div>
+
+            {% if form.errors or form.non_field_errors %}
+                <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                    {%for field in form %}
+                        {{ field.errors}}
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <div>
+                <a href="{% url 'core:signup' %}" class="underline text-lg text-slate-400 mt-2 ">Vous n'avez pas de compte ? Enregistrez-vous </a>
+            </div>
+            <div>
+                <a href="#" class="underline text-lg text-slate-400 mt-2 "> Mot de passe oublié ?  </a>
+            </div>
+            <button class="py-4 px-8 text-lg bg-amber-500 hover:bg-amber-600 rounded-xl text-white mt-5 w-1/5"> Login  </button>
+    </form>
+    
+
+</div>
+{% endblock %}

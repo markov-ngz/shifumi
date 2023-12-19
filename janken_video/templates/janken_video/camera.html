@@ -1,0 +1,158 @@
+{%extends 'core/base.html' %}
+{% load static %}
+{% block title %} Camera {% endblock %}
+{% block content %}
+<!-- <div class="p-6 flex flex-col items-center">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <video id="camerafeed" autoplay controls=""></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+    <div class="p-6 flex flex-col items-center">
+        <div class="flex justify-center">
+            <div class="w-full">
+                <div class="bg-white shadow-md rounded-lg">
+                    <div class="p-4 flex flex-col items-center">
+                        <video id="camerafeed" autoplay controls="" class="rounded-xl"></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <button id="captureButton" class=" mt-10 rounded-xl text-3xl py-8 px-8 bg-purple-500 hover:bg-purple-600">Capture Frame</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the video element, canvas element, and capture button
+        const videoElement = document.getElementById('camerafeed');
+        const canvasElement = document.getElementById('canvas');
+        const captureButton = document.getElementById('captureButton');
+
+        // Check if the browser supports the necessary APIs
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Request access to the user's camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    // Set the video stream as the source for the video element
+                    videoElement.srcObject = stream;
+
+                    // Listen for the 'loadedmetadata' event to ensure the video dimensions are known
+                    videoElement.addEventListener('loadedmetadata', function () {
+                        // Set the canvas dimensions to match the video dimensions
+                        canvasElement.width = videoElement.videoWidth;
+                        canvasElement.height = videoElement.videoHeight;
+                    });
+                })
+                .catch(function (error) {
+                    console.log('Camera access error:', error);
+                });
+
+            // Event listener for the capture button
+            captureButton.addEventListener('click', function () {
+                // Draw the current video frame onto the canvas
+                const ctx = canvasElement.getContext('2d');
+                ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+
+                // Capture the image data from the canvas
+                const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
+
+                // You can now use 'imageData' as needed (e.g., send it to a server)
+                console.log('Captured image data:', imageData);
+
+
+                const serverUrl = 'http://localhost:8000/liveplay/frame-streaming';
+
+                // Convert the image data to a base64-encoded string
+                const base64ImageData = btoa(String.fromCharCode.apply(null, imageData.data));
+
+                // Create a JSON object with the base64-encoded image data
+                const dataToSend = {
+                image: base64ImageData,
+                };
+
+                // Make a POST request using the fetch API
+                fetch(serverUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSend),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the server's response
+                    console.log('Server response:', data);
+                })
+                .catch(error => {
+                    // Handle errors during the fetch
+                    console.error('Error during fetch:', error);
+                });
+
+            });
+        } else {
+            console.log('getUserMedia is not supported in this browser.');
+        }
+    </script>
+</body>
+</html>
+
+<!-- <script>
+
+// Get the video element and canvas element
+const videoElement = document.getElementById('camerafeed');
+
+// Check if the browser supports the necessary APIs
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Request access to the user's camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            // Set the video stream as the source for the video element
+            videoElement.srcObject = stream;
+
+            // Listen for the 'loadedmetadata' event to ensure the video dimensions are known
+            videoElement.addEventListener('loadedmetadata', function () {
+                // Set the canvas dimensions to match the video dimensions
+                canvasElement.width = videoElement.videoWidth;
+                canvasElement.height = videoElement.videoHeight;
+
+                // Draw the current video frame onto the canvas
+                const ctx = canvasElement.getContext('2d');
+                ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+
+                // Capture the image data from the canvas
+                const imageData = ctx.getImageData(0, 0, canvasElement.width, canvasElement.height);
+
+                // You can now use 'imageData' as needed (e.g., send it to a server)
+                console.log('Captured image data:', imageData);
+            });
+        })
+        .catch(function (error) {
+            console.log('Camera access error:', error);
+        });
+} else {
+    console.log('getUserMedia is not supported in this browser.');
+}
+</script> -->
+
+<!-- <script>
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            document.getElementById('camerafeed').srcObject = stream;
+        })
+        .catch(function (error) {
+            console.log('Camera access error:', error);
+        });
+</script> -->
+
+{% endblock %}

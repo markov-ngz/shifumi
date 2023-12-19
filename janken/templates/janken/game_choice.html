@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}  {% endblock %}
+{% block content %}
+<div class="p-6 flex flex-col items-center">
+    <div class=" flex flex-col items-center ">
+        <img src="{% static 'janken/images/jeu1.jpg'%}" alt="" class="rounded-xl" title="Thous">
+    </div>
+    <h1 class="mt-10 text-white text-5xl"> Choix du Jeu : </h1>
+    <div class="mt-10 flex items-center w-full">
+        <div class="mt-10 w-1/2 ">
+            <a href="{% url 'janken:play' %}" class="image1 mt-10 py-6 px-16 text-4xl rounded-xl text-white text-center font-semibold"> Shifumi Click'</a>
+        </div>
+        <div class="mt-10 ml-20 w-1/2">
+            <a href="{% url 'janken_video:video_test' %}" class=" py-6 px-16 text-4xl bg-red-500 red_dark rounded-xl text-white text-center font-semibold"> Shifumi Live'</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

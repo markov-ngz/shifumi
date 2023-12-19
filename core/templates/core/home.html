@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}  {% endblock %}
+{% block content %}
+<div class="p-6 flex flex-col items-center">
+    <div class="mt-10 w-5/6">
+        <img src="{% static 'core/images/main_img.jpg'%}" alt="" class="rounded-xl h-5/6" title="Gon Freecs.">
+    </div>
+    <div class="flex justify-around w-full mt-5">
+                    <a href="{% url 'janken:choice' %}" class="py-8 px-16 text-4xl bg-green-500 hover:bg-green-600 rounded-xl text-white mt-10 w-5/6 text-center font-semibold"> Jouez !  </a>
+    </div>
+</div>
+{% endblock %}

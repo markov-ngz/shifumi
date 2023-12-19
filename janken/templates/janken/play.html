@@ -1,0 +1,105 @@
+{%extends 'core/base.html' %}
+{% load static %}
+{% block title %}  {% endblock %}
+{% block content %}
+<div class="p-6 flex flex-col items-center">
+    <div id="counter_box">
+        {% if resultat == "start" %}
+            <h1 id="1" class="text-white text-6xl">0</h1>
+        {% endif %}
+    </div>
+    <form class="flex justify-around w-full mt-5" method="post">
+        {% csrf_token %}
+        <div class="w-3/12">
+            <!-- <input type="image" name="coup" value="1" alt="pierre" class="rounded-xl w-full " src="{% static 'janken/images/pierre.jpg'%}"> -->
+            <button name="pierre" value="1" onclick="reset_timer()"><img src="{% static 'janken/images/pierre.jpg'%}" alt="" class="rounded-xl w-full "></button>
+            <h2 class="text-white text-center text-5xl mt-2"> Pierre </h2>
+        </div>
+        <div class="w-3/12">
+            <!-- <input type="image" name="coup2" value="2" alt="feuille" class="rounded-xl w-full " src="{% static 'janken/images/feuille.jpg'%}"> -->
+            <button name="pierre" value="2" onclick="reset_timer()"> <img src="{% static 'janken/images/feuille.jpg'%}" alt="" class="rounded-xl w-full"></button>
+            <h2 class="text-white text-center text-5xl mt-2"> Feuille </h2>
+        </div>
+        <div class="w-3/12">
+            <!-- <input type="image" name="coup3" value="3" alt="ciseaux" class="rounded-xl w-full " src="{% static 'janken/images/ciseaux.jpg'%}"> -->
+            <button name="pierre" value="3" onclick="reset_timer()"><img src="{% static 'janken/images/ciseaux.jpg'%}" alt="" class="rounded-xl w-full "></button>
+            <h2 class="text-white text-center text-5xl mt-2"> Ciseaux </h2>
+        </div>
+    </form>
+</div>
+{% if resultat != "start" %}
+    {% if id == 0 %}
+        <div class="text-5xl mt-5 text-orange-400" id="result">{{resultat}}</div>
+    {% elif id == -1 %}
+        <div class="text-5xl mt-5 text-red-500" id="result">{{resultat}}</div>
+    {% elif id == 1 %}
+        <div class="text-5xl mt-5 text-green-500" id="result">{{resultat}}</div>
+    {% endif %}
+    <a href="#" id="try_again" onclick="reset_timer()" class="py-8 px-16 text-4xl bg-purple-500 hover:bg-purple-600 rounded-xl text-white mt-10 w-5/6 text-center font-semibold" id="2"> Nouvelle partie ? </a>
+{% endif %}
+<!-- <script>
+
+    $(document).ready(function () {
+        // Intercept the form submission
+        $("#jankenForm").submit(function (e) {
+            e.preventDefault();  // Prevent the default form submission
+
+            // Make an AJAX request
+            $.ajax({
+                type: "POST",
+                url: "{% url 'janken:play' %}",
+                data: $("#jankenForm").serialize(),  // Serialize the form data
+                success: function (data) {
+                    // Update the result container with the response
+                    $("#resultContainer").html(data.resultat);
+                },
+                error: function () {
+                    console.error("Error in AJAX request");
+                }
+            });
+        });
+    });
+</script> -->
+<script>
+    let interval;
+    var i = 10 ;
+    document.getElementById("1").innerHTML = i 
+    function reset_timer(){
+        var counter_box = document.getElementById("counter_box") ;
+        var try_again = document.getElementById("try_again") ;
+        var result_elem = document.getElementById("resultat");
+        if (counter_box.innerHTML != "TIC TAC BOUM"){
+            counter_box.innerHTML = '<h1 id="1" class="text-white text-6xl">0</h1>';
+        }
+        if(result_elem != null){
+            result_elem.remove();
+            try_again.remove() ; 
+        }
+
+        if (interval){
+            clearInterval(interval);
+            interval = null;
+            i = 10;
+        }else{
+            timer();
+        }
+    }
+    function change_number(){
+        document.getElementById("1").innerHTML = i ; 
+        i-=1;
+        console.log(document.getElementById("1").innerHTML);
+        if(i == 0){
+            document.getElementById("1").innerHTML = "TIC TAC BOUM" ; 
+            alert("TIC TAC BOUM")
+            reset_timer()
+        }
+    }
+    function timer(){
+        if(!interval){
+            change_number();
+            interval  = setInterval(change_number, 1000);
+        }
+    }
+    reset_timer();
+</script>
+{% endblock %}
