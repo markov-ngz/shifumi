@@ -10,6 +10,10 @@ from PIL import Image
 import base64
 import io
 import numpy as np
+from .preprocess import * 
+from .predict import *
+from .rpc import jouer
+
 
 def another(request):
     return render(request,"janken_video/camera2.html")
@@ -30,15 +34,24 @@ def frame_streaming(request):
     image = Image.open(io.BytesIO(base64_decoded))
     image_np = np.array(image)
 
+    np.save("image_test.npy",image_np)
+
     image_rgb = image_np[:,:,:3]
 
+    print("Dimension de l'image enregistrée : ", image_rgb.shape)
+
+    #----PREPROCESS + PREDICTION --------------------------------------------------------------------------------------------
+
+    image_preprocessed = preprocess_image(image_rgb)
+
+    label_predicted = predict_coup(image_preprocessed)
+
     #-------------------------------------------------------------------------------------------------
 
-    #IMAGE PROCESSING HERE
+    resultat_partie = jouer(label_predicted)
 
-    #-------------------------------------------------------------------------------------------------
+    resultat = json.dumps(resultat_partie)
 
-    resultat = json.dumps({"resultat":"victoire"})
     # Create an HttpResponse object
     response = HttpResponse(content=resultat, content_type='application/json')
 
@@ -47,7 +60,7 @@ def frame_streaming(request):
     # response['content_type'] = "application/json"
 
     # Add the Access-Control-Allow-Origin header
-    response['Access-Control-Allow-Origin'] = 'http://127.0.0.1:8000/liveplay/another'
+    response['Access-Control-Allow-Origin'] = 'http://127.0.0.1:8000/liveplay/livestream'
 
     # You can also add other CORS headers if needed
     response['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
