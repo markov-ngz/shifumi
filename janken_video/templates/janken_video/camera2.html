@@ -2,16 +2,21 @@
 {% load static %}
 {% block title %} Camera {% endblock %}
 {% block content %}
+  <div id="counter_box">
+        <h1 id="1" class="text-white text-6xl">5</h1>
+  </div>
+  <div class="text-5xl mt-5 text-orange-400" id="result"></div>
     <div class="flex flex-col items-center">
         <video id="video" class="rounded-xl mt-10" >Video stream not available.</video>
         <button id="startbutton" class="mt-10 rounded-xl text-3xl py-8 px-8 bg-purple-500 hover:bg-purple-600"> JOUER ! 遊ぶ </button>
     </div>
     <canvas id="canvas" hidden> </canvas>
-    <!-- <div class="output">
-        <img id="photo" alt="The screen capture will appear in this box."  class="rounded-xl text-white mt-10"/>
-    </div> -->
+ 
 <script>
-    (() => {
+  // IMPORTANT  : 
+  // code from mmozilla dev : https://developer.mozilla.org/en-US/docs/Web/API/Media_Capture_and_Streams_API/Taking_still_photos
+
+  (() => {
   // The width and height of the captured photo. We will set the
   // width to the value defined here, but the height will be
   // calculated based on the aspect ratio of the input stream.
@@ -53,7 +58,6 @@
     }
     video = document.getElementById("video");
     canvas = document.getElementById("canvas");
-    // photo = document.getElementById("photo");
     startbutton = document.getElementById("startbutton");
 
     navigator.mediaDevices
@@ -70,7 +74,6 @@
       "canplay",
       (ev) => {
         if (!streaming) {
-            console.log(video.videoWidth);
           height = video.videoHeight / (video.videoWidth / width);
 
           // Firefox currently has a bug where the height can't be read from
@@ -93,7 +96,8 @@
     startbutton.addEventListener(
       "click",
       (ev) => {
-        takepicture();
+        // takepicture();
+        reset_timer();
         ev.preventDefault();
       },
       false,
@@ -130,14 +134,11 @@
       const data = canvas.toDataURL("image/png");
 
       
-      
-    //   photo.setAttribute("src", data);
+  
 
       // ---- SENDING DATA IMAGE --------------------------------------------------------- //
 
-    // Convert the image data to a base64-encoded string
-    // const base64ImageData = btoa(String.fromCharCode.apply(null, imageData.data));
-
+    // removing the text that is not the b64 image
     const data_to_send = data.slice(22);
 
     // Create a JSON object with the base64-encoded image data
@@ -152,7 +153,6 @@
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Origin' : 'http://127.0.0.1:8000/liveplay/another',
     },
     body: JSON.stringify(dataToSend),
     
@@ -161,7 +161,11 @@
         if (!response.ok) {
         throw new Error('Network response was not ok');
         }
-        console.log(response.json())
+        console.log(response.json().then(function(result){
+          console.log(result)
+          alert(result["resultat"])
+          document.getElementById("result").innerHTML = "Vous avez jouez :" + result["coup_user"]
+        }))
         return response
     })
     .then(data => {
@@ -181,6 +185,42 @@
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener("load", startup, false);
+
+  //##TIMER##############################################################################################
+  let interval;
+    var i = 5 ;
+    document.getElementById("1").innerHTML = i 
+    function reset_timer(){
+        var counter_box = document.getElementById("counter_box") ;
+        if (counter_box.innerHTML != "TIC TAC BOUM"){
+            counter_box.innerHTML = '<h1 id="1" class="text-white text-6xl">0</h1>';
+        }
+        if (interval){
+            clearInterval(interval);
+            interval = null;
+            i = 5;
+        }else{
+            timer();
+        }
+    }
+    function change_number(){
+        document.getElementById("1").innerHTML = i-1 ; 
+        i-=1;
+        console.log(document.getElementById("1").innerHTML);
+        if(i == 0){
+            document.getElementById("1").innerHTML = "TIC TAC BOUM" ; 
+            takepicture();
+            alert("Wait for a minute while the image is processed")
+            reset_timer();
+        }
+    }
+    function timer(){
+        if(!interval){
+            change_number();
+            interval  = setInterval(change_number, 1000);
+        }
+    }
 })();
+
 </script>
 {% endblock %}

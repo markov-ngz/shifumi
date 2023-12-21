@@ -37,29 +37,7 @@
     {% endif %}
     <a href="#" id="try_again" onclick="reset_timer()" class="py-8 px-16 text-4xl bg-purple-500 hover:bg-purple-600 rounded-xl text-white mt-10 w-5/6 text-center font-semibold" id="2"> Nouvelle partie ? </a>
 {% endif %}
-<!-- <script>
 
-    $(document).ready(function () {
-        // Intercept the form submission
-        $("#jankenForm").submit(function (e) {
-            e.preventDefault();  // Prevent the default form submission
-
-            // Make an AJAX request
-            $.ajax({
-                type: "POST",
-                url: "{% url 'janken:play' %}",
-                data: $("#jankenForm").serialize(),  // Serialize the form data
-                success: function (data) {
-                    // Update the result container with the response
-                    $("#resultContainer").html(data.resultat);
-                },
-                error: function () {
-                    console.error("Error in AJAX request");
-                }
-            });
-        });
-    });
-</script> -->
 <script>
     let interval;
     var i = 10 ;

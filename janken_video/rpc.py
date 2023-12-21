@@ -7,6 +7,13 @@ def jouer(coup:int)->dict:
         coup_pc = random.randint(1,nombre_coups_possibles)
         coup_user = coup
 
+        if coup == 0 : 
+             predicted = "feuille"
+        elif coup == 1 :
+             predicted = "pierre"
+        elif coup ==2 :
+             predicted = "ciseaux"
+
         coup_user_modulo = coup_user % nombre_coups_possibles
         coup_pc_modulo = coup_pc % nombre_coups_possibles
 
@@ -20,4 +27,4 @@ def jouer(coup:int)->dict:
             resultat = " Victoire Ecrasante ! "
             id = 1 
 
-        return {"resultat":resultat, "id":id}
+        return {"resultat":resultat, "id":id,"coup_user":predicted}

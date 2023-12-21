@@ -3,7 +3,7 @@ import torch
 from transformers import SamModel, SamProcessor
 import skimage
 import numpy as np 
-
+import os 
 
 
 # device ressources
@@ -12,10 +12,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 #--- Segment ---------------------------------------------------------------------------------------
 
 # SAM model to segment and get the hand , see notebook for reference
-# model_name = r"path_to_model"
-# processor_name = r"path_to_model"
-# model = SamModel.from_pretrained(model_name).to(device)
-# processor = SamProcessor.from_pretrained(processor_name)
+model_name = r"shifumi_models/sam_model/"
+processor_name = r"shifumi_models/sam_processor/"
+model = SamModel.from_pretrained(model_name).to(device)
+processor = SamProcessor.from_pretrained(processor_name)
 
 # prompts to improve segmentation
 input_point = np.array([[75,200]]) # x, y 
@@ -82,8 +82,10 @@ def preprocess_image(image:np.array)->np.array:
     """
     
     """
+
     # resize the image 
-    image_resized = image.resize((200,300))
+    image_resized = Image.fromarray(image).resize((200,300))
+
 
     # 60 sec approx to run this cell 
     # run this once for multiple predictions 
@@ -103,4 +105,8 @@ def preprocess_image(image:np.array)->np.array:
     # (h,w,) -> (h,w,3)
     preprocessed_image = skimage.color.gray2rgb(binary_mask)
 
-    return preprocessed_image
+    h, w, c = preprocessed_image.shape
+    # model expect (batch_size,h,w,3) => unsqueeze 
+    unsqueezed_img= preprocessed_image.reshape((1,h,w,c))
+
+    return unsqueezed_img
