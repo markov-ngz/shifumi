@@ -19,19 +19,25 @@ def another(request):
     print(os.getcwd())
     return render(request,"janken_video/camera2.html")
 
-@csrf_exempt 
+
+@csrf_exempt # !!! NEVER DO THIS EXCEPT IF YOU KNOW, WAS DONE JUST CAUSE I WAS LAZY  
 def frame_streaming(request):
+
+    # ugly way to deal with an image
     try:
+        
         data_received = json.loads(request.body)
         print('Data received:', data_received.keys())
     except json.JSONDecodeError as e:
         print('Error decoding JSON:', e)
 
+    # get the image value
     image_b64  = data_received['image']
 
+    # add the == to decode the image
     base64_decoded = base64.b64decode(image_b64+ "==")
 
-
+    # 
     image = Image.open(io.BytesIO(base64_decoded))
     image_np = np.array(image)
 
