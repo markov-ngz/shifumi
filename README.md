@@ -1,13 +1,15 @@
-# SHIFUMI 
-<br>
-Rock-Paper-Scissors Application<br>
-The application has two games : <br>
-- Shifumi Click' ( basic Shifumi ) <br>
-- Shifumi Stream' ( Computer Vision Shifumi ) <br>
-<br>
-<br>
+# Shifumi 
+Repository dedicated to the development of a rock paper scissors application. <br>
+<hr>
+The application has two games :
+<ul>
+  <li>Shifumi Click' ( basic Shifumi )</li>
+  <li>Shifumi Stream' ( Computer Vision Shifumi )</li>
+</ul>
 
-# Shifumi Frontend
+<hr>
+
+## Templates 
 Homepage: <br>
 <br>
 <img src="shifumi_img/homepage.JPG" width=75%>
