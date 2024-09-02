@@ -20,7 +20,8 @@ Select game's page: <br>
 <img src="shifumi_img/choix_du_jeu.JPG" width=75%>
 
 ## Shifumi Click'
-The user must made his move in 10 seconds ( What would happen if he doesn't ? 💣 )
+<br>
+The user must made his move in 10 seconds ( What would happen if he doesn't ? 💣 ) <br>
 <br>
 <img src="shifumi_img/shifumi_click_1.JPG" width=75%>
 <br>
