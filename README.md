@@ -1,4 +1,4 @@
-# Shifumi 
+# Shifumi web application
 Repository dedicated to the development of a rock paper scissors application. <br>
 <hr>
 The application has two games :
