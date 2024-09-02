@@ -1,24 +1,24 @@
 # SHIFUMI 
 <br>
-Projet de réalisation d'une application de jeu Pierre-Feuille-Ciseaux.<br>
-L'application est composée de 2 jeux : <br>
-- Shifumi Click' ( juste un formulaire) <br>
+Rock-Paper-Scissors Application<br>
+The application has two games : <br>
+- Shifumi Click' ( basic Shifumi ) <br>
 - Shifumi Stream' ( Computer Vision Shifumi ) <br>
 <br>
 <br>
 
-# Shifumi Portail 
-Page d'accueil : <br>
+# Shifumi Frontend
+Homepage: <br>
 <br>
 <img src="shifumi_img/homepage.JPG" width=75%>
 <br>
 <hr>
-Page de choix du jeu : <br>
+Select game's page: <br>
 <br>
 <img src="shifumi_img/choix_du_jeu.JPG" width=75%>
 
 ## Shifumi Click'
-L'utilisateur choisit son coup en moins de 10 secondes ( que se passera-t-il s'il ne le fait pas ?)
+The user must made his move in 10 seconds ( What would happen if he doesn't ? 💣 )
 <br>
 <img src="shifumi_img/shifumi_click_1.JPG" width=75%>
 <br>
@@ -29,8 +29,8 @@ L'utilisateur choisit son coup en moins de 10 secondes ( que se passera-t-il s'i
 
 ## Shifumi Stream'
 
-L'utilisateur clique sur le bouton jouer, 5 secondes plus tard la photo sera prise.<br>
-Sur un fond noir, la personne montre le coup qu'elle doit jouer avec sa main.<br>
+The user click on the 'play' button, 5 seconds later the photo would be taken.<br>
+With a black background,  the person choose his move with his own hand.<br>
 <br>
 
 <img src="shifumi_img/shifumi_stream_1.JPG" width=75%>
