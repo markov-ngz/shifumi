@@ -1,10 +1,20 @@
 # SHIFUMI 
+
+<br>
+Pour installer l'environnement d'execution : <br>
+conda create env_name python=3.10 <br>
+conda activate env_name <br>
+
+Se placer dans le dossier : <br>
+python manage.py runserver
+
 <br>
 Projet de réalisation d'une application de jeu Pierre-Feuille-Ciseaux.<br>
 L'application est composée de 2 jeux : <br>
 - Shifumi Click' ( juste un formulaire) <br>
 - Shifumi Stream' ( Computer Vision Shifumi ) <br>
 <br>
+
 <br>
 
 # Shifumi Portail 
