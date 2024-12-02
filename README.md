@@ -1,34 +1,27 @@
-# SHIFUMI 
+# Shifumi web application
+Repository dedicated to the development of a rock paper scissors application. <br>
+<hr>
+The application has two games :
+<ul>
+  <li>Shifumi Click' ( basic Shifumi )</li>
+  <li>Shifumi Stream' ( Computer Vision Shifumi )</li>
+</ul>
 
-<br>
-Pour installer l'environnement d'execution : <br>
-conda create env_name python=3.10 <br>
-conda activate env_name <br>
+<hr>
 
-Se placer dans le dossier : <br>
-python manage.py runserver
-
-<br>
-Projet de réalisation d'une application de jeu Pierre-Feuille-Ciseaux.<br>
-L'application est composée de 2 jeux : <br>
-- Shifumi Click' ( juste un formulaire) <br>
-- Shifumi Stream' ( Computer Vision Shifumi ) <br>
-<br>
-
-<br>
-
-# Shifumi Portail 
-Page d'accueil : <br>
+## Templates 
+Homepage: <br>
 <br>
 <img src="shifumi_img/homepage.JPG" width=75%>
 <br>
 <hr>
-Page de choix du jeu : <br>
+Select game's page: <br>
 <br>
 <img src="shifumi_img/choix_du_jeu.JPG" width=75%>
 
 ## Shifumi Click'
-L'utilisateur choisit son coup en moins de 10 secondes ( que se passera-t-il s'il ne le fait pas ?)
+<br>
+The user must made his move in 10 seconds ( What would happen if he doesn't ? 💣 ) <br>
 <br>
 <img src="shifumi_img/shifumi_click_1.JPG" width=75%>
 <br>
@@ -39,8 +32,8 @@ L'utilisateur choisit son coup en moins de 10 secondes ( que se passera-t-il s'i
 
 ## Shifumi Stream'
 
-L'utilisateur clique sur le bouton jouer, 5 secondes plus tard la photo sera prise.<br>
-Sur un fond noir, la personne montre le coup qu'elle doit jouer avec sa main.<br>
+The user click on the 'play' button, 5 seconds later the photo would be taken.<br>
+With a black background,  the person choose his move with his own hand.<br>
 <br>
 
 <img src="shifumi_img/shifumi_stream_1.JPG" width=75%>
